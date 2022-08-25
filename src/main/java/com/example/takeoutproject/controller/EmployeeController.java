@@ -51,6 +51,6 @@ public class EmployeeController {
         // 6. put id into session and return success
         request.getSession().setAttribute("employee", searchEmployee.getId());
 
-        return JsonData.buildSuccess(searchEmployee.getUsername());
+        return JsonData.buildSuccess(searchEmployee);
     }
 }
