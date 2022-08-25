@@ -22,6 +22,12 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
+    /**
+     * employee login
+     * @param request
+     * @param employee
+     * @return
+     */
     @PostMapping("/login")
     public JsonData login(HttpServletRequest request, @RequestBody Employee employee) {
 
@@ -52,5 +58,18 @@ public class EmployeeController {
         request.getSession().setAttribute("employee", searchEmployee.getId());
 
         return JsonData.buildSuccess(searchEmployee);
+    }
+
+    /**
+     * employee logout
+     * @param request
+     * @return
+     */
+    @PostMapping("/logout")
+    public JsonData logout(HttpServletRequest request) {
+        // clear session id
+        request.getSession().removeAttribute("employee");
+
+        return JsonData.buildSuccess("successful logout");
     }
 }
