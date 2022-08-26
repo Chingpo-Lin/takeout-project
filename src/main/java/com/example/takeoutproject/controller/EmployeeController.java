@@ -1,12 +1,14 @@
 package com.example.takeoutproject.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.takeoutproject.entity.Employee;
 import com.example.takeoutproject.service.EmployeeService;
 import com.example.takeoutproject.util.JsonData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -92,5 +94,32 @@ public class EmployeeController {
         employeeService.save(employee);
 
         return JsonData.buildSuccess();
+    }
+
+    /**
+     * paging for employee
+     * @param page
+     * @param pageSize
+     * @param name
+     * @return
+     */
+    @GetMapping("/page")
+    public JsonData page(int page, int pageSize, String name) {
+        log.info("page = {}, pageSize = {}, name = {}", page, pageSize, name);
+
+        /// paging constructor
+        Page pageInfo = new Page(page, pageSize);
+
+        // condition constructor
+        LambdaQueryWrapper<Employee> queryWrapper = new LambdaQueryWrapper();
+        if (name != null && name.length() != 0) {
+            queryWrapper.like(Employee::getName, name);
+        }
+        queryWrapper.orderByDesc(Employee::getUpdateTime);
+
+        // execute paging
+        employeeService.page(pageInfo, queryWrapper);
+
+        return JsonData.buildSuccess(pageInfo);
     }
 }
