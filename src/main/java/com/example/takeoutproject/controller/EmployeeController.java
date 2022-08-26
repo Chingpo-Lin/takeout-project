@@ -122,4 +122,19 @@ public class EmployeeController {
 
         return JsonData.buildSuccess(pageInfo);
     }
+
+    /**
+     * renew employee info by id
+     * @param employee
+     * @return
+     */
+    @PutMapping
+    public JsonData update(HttpServletRequest request, @RequestBody Employee employee) {
+        log.info(employee.toString());
+
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser((Long)request.getSession().getAttribute("employee"));
+        employeeService.updateById(employee);
+        return JsonData.buildSuccess();
+    }
 }
