@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-//  菜品分类，id为1
+//  dishes
 @Data
 public class Dish implements Serializable {
 

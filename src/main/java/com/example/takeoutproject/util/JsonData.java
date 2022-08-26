@@ -33,6 +33,12 @@ public class JsonData {
         return new JsonData(1, data, null);
     }
 
+    // scuess with given data, msg
+    public static JsonData
+    buildSuccess(Object data, String msg) {
+        return new JsonData(1, data, msg);
+    }
+
     // fail with given msg
     public static JsonData buildError(String msg) {
         return new JsonData(0, null, msg);

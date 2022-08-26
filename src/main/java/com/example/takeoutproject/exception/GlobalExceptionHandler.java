@@ -26,7 +26,12 @@ public class GlobalExceptionHandler {
             String[] split = exception.getMessage().split(" ");
             return JsonData.buildError("fail:" + split[2] + " already exist");
         }
-
         return JsonData.buildError("unknown error");
+    }
+
+    @ExceptionHandler(CustomException.class)
+    public JsonData exceptionHandler(CustomException exception) {
+        log.error(exception.getMessage());
+        return JsonData.buildError(exception.getMessage());
     }
 }

@@ -2,9 +2,7 @@ package com.example.takeoutproject.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.example.takeoutproject.entity.Category;
-import com.example.takeoutproject.entity.Employee;
+import com.example.takeoutproject.entity.Setmeal;
 
-public interface CategoryService extends IService<Category> {
-
-    public void remove(Long id);
+public interface SetmealService extends IService<Setmeal> {
 }
