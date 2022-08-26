@@ -35,7 +35,7 @@ public class JsonData {
 
     // fail with given msg
     public static JsonData buildError(String msg) {
-        return new JsonData(-1, null, msg);
+        return new JsonData(0, null, msg);
     }
 
     // fail with given msg and code

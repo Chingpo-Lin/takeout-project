@@ -7,12 +7,10 @@ import com.example.takeoutproject.util.JsonData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
 
 @Slf4j
 @RestController
@@ -71,5 +69,28 @@ public class EmployeeController {
         request.getSession().removeAttribute("employee");
 
         return JsonData.buildSuccess("successful logout");
+    }
+
+    /**
+     *
+     * @param employee
+     * @return
+     */
+    @PostMapping
+    public JsonData save(HttpServletRequest request, @RequestBody Employee employee) {
+        log.info("add employee: {}", employee.toString());
+
+        // initial password, need md5
+        employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
+        employee.setCreateTime(LocalDateTime.now());
+        employee.setUpdateTime(LocalDateTime.now());
+        Long empId = (Long)request.getSession().getAttribute("employee");
+
+        employee.setCreateUser(empId);
+        employee.setUpdateUser(empId);
+
+        employeeService.save(employee);
+
+        return JsonData.buildSuccess();
     }
 }
