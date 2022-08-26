@@ -84,12 +84,12 @@ public class EmployeeController {
 
         // initial password, need md5
         employee.setPassword(DigestUtils.md5DigestAsHex("123456".getBytes()));
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
         Long empId = (Long)request.getSession().getAttribute("employee");
 
-        employee.setCreateUser(empId);
-        employee.setUpdateUser(empId);
+//        employee.setCreateUser(empId);
+//        employee.setUpdateUser(empId);
 
         employeeService.save(employee);
 
@@ -132,9 +132,19 @@ public class EmployeeController {
     public JsonData update(HttpServletRequest request, @RequestBody Employee employee) {
         log.info(employee.toString());
 
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser((Long)request.getSession().getAttribute("employee"));
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser((Long)request.getSession().getAttribute("employee"));
         employeeService.updateById(employee);
         return JsonData.buildSuccess();
+    }
+
+    @GetMapping("/{id}")
+    public JsonData getById(@PathVariable Long id) {
+        log.info("search employee by id");
+        Employee employee = employeeService.getById(id);
+        if (employee != null) {
+            return JsonData.buildSuccess(employee);
+        }
+        return JsonData.buildError("employee not found");
     }
 }

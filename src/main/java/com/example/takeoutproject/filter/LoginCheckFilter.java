@@ -1,6 +1,7 @@
 package com.example.takeoutproject.filter;
 
 import com.alibaba.fastjson.JSON;
+import com.example.takeoutproject.util.BaseContext;
 import com.example.takeoutproject.util.JsonData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.AntPathMatcher;
@@ -45,7 +46,11 @@ public class LoginCheckFilter implements Filter {
 
         // 4. check login status, if login, dofilter
         if (request.getSession().getAttribute("employee") != null) {
-            log.info("user already logins with id: {}", request.getSession().getAttribute("employee"));
+            Long empId = (Long)request.getSession().getAttribute("employee");
+            log.info("user already logins with id: {}", empId);
+
+            BaseContext.setCurrentId(empId);
+
             filterChain.doFilter(request, response);
             return;
         }
