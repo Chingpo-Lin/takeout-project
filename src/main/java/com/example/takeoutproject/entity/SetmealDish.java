@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 /**
- * 套餐菜品关系
+ * meal set
  */
 @Data
 public class SetmealDish implements Serializable {

@@ -11,7 +11,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 分类
+ * category
  */
 @Data
 public class Category implements Serializable {

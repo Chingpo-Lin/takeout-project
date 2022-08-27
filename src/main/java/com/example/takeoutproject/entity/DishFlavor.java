@@ -9,7 +9,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
-菜品口味
+dish flavor
  */
 @Data
 public class DishFlavor implements Serializable {
