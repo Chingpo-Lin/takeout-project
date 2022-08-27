@@ -106,4 +106,23 @@ public class DishController {
 
         return JsonData.buildSuccess(null, "successfully add");
     }
+
+    /**
+     * list dishes by given condition
+     * @param dish
+     * @return
+     */
+    @GetMapping("/list")
+    public JsonData list(Dish dish) {
+
+        // construct conditions
+        LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
+        queryWrapper.eq(Dish::getStatus, 1);
+        queryWrapper.orderByAsc(Dish::getSort).orderByDesc(Dish::getUpdateTime);
+
+        List<Dish> list = dishService.list(queryWrapper);
+
+        return JsonData.buildSuccess(list);
+    }
 }
