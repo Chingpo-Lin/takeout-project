@@ -18,3 +18,7 @@ mybatis-plus:
   global-config:
     db-config:
       id-type: ASSIGN_ID
+
+reggie:
+  img:
+    path: /Users/linbob/Desktop/code/All_Java/takeout-project/project/img/

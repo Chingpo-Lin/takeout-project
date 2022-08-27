@@ -7,7 +7,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 class TakeoutProjectApplicationTests {
 
 	@Test
-	void contextLoads() {
+	public void test1() {
+		String fileName = "ererdfsf.jpg";
+		String suffix = fileName.substring(fileName.lastIndexOf("."));
+		System.out.println(suffix);
 	}
 
 }

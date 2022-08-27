@@ -10,6 +10,8 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * category controller
  */
@@ -64,5 +66,36 @@ public class CategoryController {
         log.info("delete category with id: {}", ids);
         categoryService.remove(ids);
         return JsonData.buildSuccess(null, "delete successfully");
+    }
+
+    /**
+     * revise category by id
+     * @param category
+     * @return
+     */
+    @PutMapping
+    public JsonData update(@RequestBody Category category) {
+        log.info("revise category message: {}", category);
+
+        categoryService.updateById(category);
+        return JsonData.buildSuccess(null, "update successfully");
+    }
+
+    /**
+     * check category data by condition
+     * @param category
+     * @return
+     */
+    @GetMapping("/list")
+    public JsonData list(Category category) {
+        // condition constructor
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        // add condition
+        queryWrapper.eq(category.getType() != null, Category::getType, category.getType());
+        // order condition
+        queryWrapper.orderByAsc(Category::getSort).orderByDesc(Category::getUpdateTime);
+
+        List<Category> list = categoryService.list(queryWrapper);
+        return JsonData.buildSuccess(list);
     }
 }
