@@ -16,31 +16,31 @@ public class OrderDetail implements Serializable {
 
     private Long id;
 
-    //名称
+    // name
     private String name;
 
-    //订单id
+    // order id
     private Long orderId;
 
 
-    //菜品id
+    // dish id
     private Long dishId;
 
 
-    //套餐id
+    //setmeal id
     private Long setmealId;
 
 
-    //口味
+    // flavor
     private String dishFlavor;
 
 
-    //数量
+    // number
     private Integer number;
 
-    //金额
+    // price
     private BigDecimal amount;
 
-    //图片
+    // img
     private String image;
 }
