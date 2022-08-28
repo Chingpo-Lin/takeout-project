@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 地址簿
+ * address 
  */
 @Data
 public class AddressBook implements Serializable {
