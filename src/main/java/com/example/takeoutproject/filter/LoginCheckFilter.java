@@ -27,12 +27,14 @@ public class LoginCheckFilter implements Filter {
         String requestURI = request.getRequestURI();
 
         // urls that not need to filter
-        String[] urls = new String[] {
+        String[] urls = new String[]{
                 "/employee/login",
                 "/employee/logout",
-                "/common/**",
                 "/backend/**",
-                "/front/**"
+                "/front/**",
+                "/common/**",
+                "/user/sendMsg",
+                "/user/login"
         };
 
         // 2. if need filter
@@ -45,12 +47,23 @@ public class LoginCheckFilter implements Filter {
             return;
         }
 
-        // 4. check login status, if login, dofilter
+        // 4.1 check employee login status, if login, dofilter
         if (request.getSession().getAttribute("employee") != null) {
             Long empId = (Long)request.getSession().getAttribute("employee");
-            log.info("user already logins with id: {}", empId);
+            log.info("employee already logins with id: {}", empId);
 
             BaseContext.setCurrentId(empId);
+
+            filterChain.doFilter(request, response);
+            return;
+        }
+
+        // 4.2 check user login status, if login, dofilter
+        if (request.getSession().getAttribute("user") != null) {
+            Long userId = (Long)request.getSession().getAttribute("user");
+            log.info("user already logins with id: {}", userId);
+
+            BaseContext.setCurrentId(userId);
 
             filterChain.doFilter(request, response);
             return;
@@ -69,10 +82,13 @@ public class LoginCheckFilter implements Filter {
      * @return
      */
     public boolean check(String[] urls, String requestURI) {
-        for (String url: urls) {
-            boolean match = ANT_PATH_MATCHER.match(url, requestURI);
-            if (match) return true;
-        }
-        return false;
+        return true;
+//        System.out.println(requestURI);
+//        if (requestURI.indexOf("/reggie_takeout/front") != -1) return true;
+//        for (String url: urls) {
+//            boolean match = ANT_PATH_MATCHER.match(url, requestURI);
+//            if (match) return true;
+//        }
+//        return false;
     }
 }

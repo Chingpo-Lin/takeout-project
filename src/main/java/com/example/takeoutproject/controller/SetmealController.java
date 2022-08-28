@@ -78,10 +78,32 @@ public class SetmealController {
         return JsonData.buildSuccess(dtoPage);
     }
 
+    /**
+     * delete set meals
+     * @param ids
+     * @return
+     */
     @DeleteMapping
     public JsonData delete(@RequestParam List<Long> ids) {
         log.info("ids:{}", ids);
         setmealService.removeWithDish(ids);
         return JsonData.buildSuccess(null, "delete successfully");
+    }
+
+    /**
+     * list of setmeal
+     * @param setmeal
+     * @return
+     */
+    @GetMapping("/list")
+    public JsonData list(Setmeal setmeal) {
+        LambdaQueryWrapper<Setmeal> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(setmeal.getCategoryId() != null, Setmeal::getCategoryId, setmeal.getCategoryId());
+        queryWrapper.eq(setmeal.getStatus() != null, Setmeal::getStatus, setmeal.getStatus());
+        queryWrapper.orderByDesc(Setmeal::getUpdateTime);
+
+        List<Setmeal> list = setmealService.list(queryWrapper);
+
+        return JsonData.buildSuccess(list);
     }
 }

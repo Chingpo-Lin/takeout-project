@@ -54,7 +54,7 @@ public class AddressBookController {
     }
 
     /**
-     * 根据id查询地址
+     * check address by id
      */
     @GetMapping("/{id}")
     public JsonData get(@PathVariable Long id) {
@@ -67,7 +67,7 @@ public class AddressBookController {
     }
 
     /**
-     * 查询默认地址
+     * check default address
      */
     @GetMapping("default")
     public JsonData getDefault() {

@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.example.takeoutproject.dto.DishDto;
 import com.example.takeoutproject.entity.Category;
 import com.example.takeoutproject.entity.Dish;
+import com.example.takeoutproject.entity.DishFlavor;
 import com.example.takeoutproject.service.CategoryService;
 import com.example.takeoutproject.service.DishFlavorService;
 import com.example.takeoutproject.service.DishService;
@@ -14,6 +15,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -123,6 +125,24 @@ public class DishController {
 
         List<Dish> list = dishService.list(queryWrapper);
 
-        return JsonData.buildSuccess(list);
+        List<DishDto> newList = list.stream().map((item) -> {
+            DishDto dishDto = new DishDto();
+            BeanUtils.copyProperties(item, dishDto);
+            Long categoryId = item.getCategoryId();
+            Category category = categoryService.getById(categoryId);
+            dishDto.setCategoryName(category.getName());
+
+            // current dish id, look for flavor
+            Long dishId = item.getId();
+            LambdaQueryWrapper<DishFlavor> queryWrapper1 = new LambdaQueryWrapper<>();
+            queryWrapper1.eq(DishFlavor::getDishId, dishId);
+            List<DishFlavor> dishFlavorList = dishFlavorService.list(queryWrapper1);
+            dishDto.setFlavors(dishFlavorList);
+
+            return dishDto;
+        }).collect(Collectors.toList());
+
+
+        return JsonData.buildSuccess(newList);
     }
 }

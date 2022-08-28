@@ -22,7 +22,7 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
     protected void addResourceHandlers(ResourceHandlerRegistry registry) {
         log.info("connect to static resource...");
         registry.addResourceHandler("/backend/**").addResourceLocations("classpath:/backend/");
-        registry.addResourceHandler("/front/**").addResourceLocations("classpath:/backend/");
+        registry.addResourceHandler("/front/**").addResourceLocations("classpath:/front/");
     }
 
     /**
