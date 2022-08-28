@@ -57,7 +57,7 @@ public class LoginCheckFilter implements Filter {
             filterChain.doFilter(request, response);
             return;
         }
-
+        System.out.println(request.getSession().getAttribute("user"));
         // 4.2 check user login status, if login, dofilter
         if (request.getSession().getAttribute("user") != null) {
             Long userId = (Long)request.getSession().getAttribute("user");
@@ -82,13 +82,12 @@ public class LoginCheckFilter implements Filter {
      * @return
      */
     public boolean check(String[] urls, String requestURI) {
-        return true;
-//        System.out.println(requestURI);
-//        if (requestURI.indexOf("/reggie_takeout/front") != -1) return true;
-//        for (String url: urls) {
-//            boolean match = ANT_PATH_MATCHER.match(url, requestURI);
-//            if (match) return true;
-//        }
-//        return false;
+//        return true;
+        System.out.println(requestURI);
+        for (String url: urls) {
+            boolean match = ANT_PATH_MATCHER.match(url, requestURI);
+            if (match) return true;
+        }
+        return false;
     }
 }

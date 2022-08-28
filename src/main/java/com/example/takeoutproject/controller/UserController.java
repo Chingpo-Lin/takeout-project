@@ -34,8 +34,7 @@ public class UserController {
         String phone = user.getPhone();
         if (StringUtils.isNotEmpty(phone)) {
             session.setAttribute(phone, "123456");
-            session.setAttribute("user", user.getId());
-            return JsonData.buildSuccess(user);
+            return JsonData.buildSuccess("send successfully");
         }
         return JsonData.buildError("user not found");
     }
@@ -55,18 +54,22 @@ public class UserController {
         
         Object codeInSession = session.getAttribute(phone);
         // if code is correct
-        if (codeInSession != null && codeInSession.equals(code)) {
+        if(codeInSession != null && codeInSession.equals(code)){
+            // login successfully
             LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
-            queryWrapper.eq(User::getPhone, phone);
-
+            queryWrapper.eq(User::getPhone,phone);
+            System.out.println("enter here");
             User user = userService.getOne(queryWrapper);
-            // old user
-            if (user != null) {
+            System.out.println("enter here2");
+            if(user == null){
+                // check if new user
                 user = new User();
                 user.setPhone(phone);
                 user.setStatus(1);
                 userService.save(user);
+                System.out.println("enter here3");
             }
+            session.setAttribute("user",user.getId());
             return JsonData.buildSuccess(user);
         }
         return JsonData.buildError("login fail");
