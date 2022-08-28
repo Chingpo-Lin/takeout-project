@@ -11,6 +11,12 @@ spring:
       username: root
       password: xdclass.net168
 
+  redis:
+    host: 120.24.94.91
+    port: 6379
+    password: ljb112233
+    database: 0
+
 mybatis-plus:
   configuration:
     #在映射实体或者属性时，将数据库中表名和字段名中的下划线去掉，按照驼峰命名法映射
@@ -23,3 +29,4 @@ mybatis-plus:
 reggie:
   img:
     path: /Users/linbob/Desktop/code/All_Java/takeout-project/project/img/
+
