@@ -17,7 +17,7 @@
       min-width: 1366px;
     }
   </style>
-</head>
+</head> 
 
 <body>
   <div class="login" id="login-app">
@@ -100,8 +100,7 @@
             if (valid) {
               this.loading = true
               let res = await loginApi(this.loginForm)
-              if (String(res.code) === '1') {  //  1:表示登录成功，具体的约定由后端实现
-                //  将res的数据 转化为JSON 保存在前端 localStorage
+              if (String(res.code) === '1') {//1表示登录成功
                 localStorage.setItem('userInfo',JSON.stringify(res.data))
                 window.location.href= '/backend/index.html'
               } else {

@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>迅磊餐购管理端</title>
+    <title>瑞吉外卖管理端</title>
     <link rel="shortcut icon" href="favicon.ico">
     <!-- 引入样式 -->
     <link rel="stylesheet" href="plugins/element-ui/index.css" />
@@ -32,7 +32,7 @@
         <div class="sidebar-container">
           <div class="logo">
             <!-- <img src="images/logo.png" width="122.5" alt="" /> -->
-            <img src="images/login/login-logo.png" alt="" style="width: 50px; height: 50px" />
+            <img src="images/login/login-logo.png" alt="" style="width: 117px; height: 32px" />
           </div>
 
           <el-scrollbar wrap-class="scrollbar-wrapper">
@@ -79,7 +79,6 @@
               <span>{{headTitle}}</span>
             </div>
             <div class="right-menu">
-
               <div class="avatar-wrapper">{{ userInfo.name }}</div>
               <!-- <div class="logout" @click="logout">退出</div> -->
               <img src="images/icons/btn_close@2x.png" class="outLogin" alt="退出" @click="logout" />
@@ -153,28 +152,6 @@
                     url: 'page/order/list.html',
                     icon: 'icon-order'
                   }
-              //     ,
-              //
-              //   {
-              //       id: '7',
-              //       name: '优惠券',
-              //       url: 'page/order/list.html',
-              //       icon: 'icon-user'
-              //   },
-              //   {
-              //       id: '8',
-              //       name: '积分',
-              //       url: 'page/order/list.html',
-              //       icon: 'icon-combo'
-              //   },
-              // {
-              //   id: '9',
-              //   name: '日志监控',
-              //   url: 'page/order/list.html',
-              //   icon: 'icon-lock'
-              // }
-
-
               //   ],
               // },
             ],
@@ -219,10 +196,6 @@
           menuHandle(item, goBackFlag) {
             this.loading = true
             this.menuActived = item.id
-            //  将原本登录到index首页的url 改为 点击左侧菜单栏 来到对应页面的url
-            //  具体逻辑 见
-            //   第48行  <el-submenu :index="item.id" v-if="item.children && item.children.length>0">
-            //   第64行  <el-menu-item v-else :index="item.id" @click="menuHandle(item,false)">
             this.iframeUrl = item.url
             this.headTitle = item.name
             this.goBackFlag = goBackFlag

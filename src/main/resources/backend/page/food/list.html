@@ -243,8 +243,6 @@
             }).then(() => {
               // 起售停售---批量起售停售接口
               dishStatusByStatus(this.dishState).then(res => {
-              // dishStatusByStatus({'id': this.id, 'status': !this.status ? 1 : 0}).then(res => {
-                // 'id': this.id, 'status': !this.status ? 1 : 0
                 if (res.code === 1) {
                   this.$message.success('菜品状态已经更改成功！')
                   this.handleQuery()
