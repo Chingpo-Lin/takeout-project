@@ -13,10 +13,13 @@ import com.example.takeoutproject.util.JsonData;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -33,6 +36,9 @@ public class DishController {
     @Autowired
     private CategoryService categoryService;
 
+    @Autowired
+    private RedisTemplate redisTemplate;
+
     /**
      * add new dish
      * @return
@@ -41,6 +47,8 @@ public class DishController {
     public JsonData save(@RequestBody DishDto dishDto) {
         log.info("add new dish: {}", dishDto.toString());
         dishService.saveWithFlavor(dishDto);
+        String key = "dish_" + dishDto.getCategoryId() + "_1";
+        redisTemplate.delete(key);
         return JsonData.buildSuccess(null, "add successfully");
     }
 
@@ -106,6 +114,14 @@ public class DishController {
 
         dishService.updateWithFlavor(dishDto);
 
+        // clear all cache inside redis
+//        Set keys = redisTemplate.keys("dish_*");
+//        redisTemplate.delete(keys);
+
+        // clear only update data inside redis
+        String key = "dish_" + dishDto.getCategoryId() + "_1";
+        redisTemplate.delete(key);
+
         return JsonData.buildSuccess(null, "successfully add");
     }
 
@@ -117,6 +133,17 @@ public class DishController {
     @GetMapping("/list")
     public JsonData list(Dish dish) {
 
+        List<DishDto> newList = null;
+
+        String key = "dish_" + dish.getCategoryId() + "_" + dish.getStatus();
+
+        // get data from redis
+        newList = (List<DishDto>) redisTemplate.opsForValue().get(key);
+        // if exist, directly return
+        if (newList != null) {
+            return JsonData.buildSuccess(newList);
+        }
+        // if not, check db and save to redis
         // construct conditions
         LambdaQueryWrapper<Dish> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(dish.getCategoryId() != null, Dish::getCategoryId, dish.getCategoryId());
@@ -125,7 +152,7 @@ public class DishController {
 
         List<Dish> list = dishService.list(queryWrapper);
 
-        List<DishDto> newList = list.stream().map((item) -> {
+        newList = list.stream().map((item) -> {
             DishDto dishDto = new DishDto();
             BeanUtils.copyProperties(item, dishDto);
             Long categoryId = item.getCategoryId();
@@ -142,6 +169,8 @@ public class DishController {
             return dishDto;
         }).collect(Collectors.toList());
 
+        // add to redis
+        redisTemplate.opsForValue().set(key, newList, 60, TimeUnit.MINUTES);
 
         return JsonData.buildSuccess(newList);
     }
