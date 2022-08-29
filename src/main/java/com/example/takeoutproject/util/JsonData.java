@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 @Data
 @AllArgsConstructor // all argument constructor
 @NoArgsConstructor // no argument constructor
 // @Builder
-public class JsonData {
+public class JsonData implements Serializable {
     /**
      * 1 success, else fail
      */
