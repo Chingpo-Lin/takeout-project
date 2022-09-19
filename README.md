@@ -2,6 +2,6 @@
 
 given codes are ignored by .gitattributes file
 
-backend functionality is written by Chingpo Lin
+backend is written by Chingpo Lin
 
-frontend codes are provided by @itheima
+frontend codes are provided by @itheima.
