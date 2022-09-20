@@ -10,7 +10,7 @@
 
 #### dishes
 #### add dishes
-![image]([https://user-images.githubusercontent.com/29085565/189311433-c935e3f1-a475-4562-bfb8-3c0d43bc495c.png](https://raw.githubusercontent.com/Chingpo-Lin/github_img/main/reggie/add_dish.jpg))
+![image](https://raw.githubusercontent.com/Chingpo-Lin/github_img/main/reggie/add_dish.jpg)
 
 
 
