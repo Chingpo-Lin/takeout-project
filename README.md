@@ -1,13 +1,13 @@
 # Reggie takeout-project
 
-## *given codes are ignored by .gitattributes file
+## * given codes are ignored by .gitattributes file
 
-## *backend is all written by Chingpo Lin
+## * backend is all written by Chingpo Lin
 
-## *frontend codes are provided by @itheima.
+## * frontend codes are provided by @itheima.
 
-## some pages are shown below:
-## *Merchant part 
+# some pages are shown below:
+## Merchant part 
 
 ### employy/admin
 #### login
@@ -33,7 +33,7 @@
 #### add setmeal
 ![image](https://raw.githubusercontent.com/Chingpo-Lin/github_img/main/reggie/add_setmeal.jpg)
 
-## *User part 
+## User part 
 
 #### login
 ![image](https://raw.githubusercontent.com/Chingpo-Lin/github_img/main/reggie/user_login.jpg)
