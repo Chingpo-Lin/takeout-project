@@ -29,13 +29,13 @@ public class JsonData implements Serializable {
         return new JsonData(1, null, null);
     }
 
-    // scuess with given data
+    // success with given data
     public static JsonData
     buildSuccess(Object data) {
         return new JsonData(1, data, null);
     }
 
-    // scuess with given data, msg
+    // success with given data, msg
     public static JsonData
     buildSuccess(Object data, String msg) {
         return new JsonData(1, data, msg);
